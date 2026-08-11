@@ -7,12 +7,33 @@ async def main():
         page = await browser.new_page()
         await page.goto("http://127.0.0.1:8000")
         await page.wait_for_timeout(2000)
+        
+        # Take initial UI screenshot
         await page.screenshot(path="screenshot_ui.png")
         
-        # Take screenshot of typing
-        await page.fill("#q", "Hello, what can you do?")
-        await page.click("#send")
-        await page.wait_for_timeout(1000)
+        # Upload the PDF
+        pdf_path = r"C:\Users\Vishwajit\OneDrive\Documents\Vishwajit Tidke Resume.pdf"
+        await page.set_input_files("#fileInput", pdf_path)
+        await page.click("#uploadBtn")
+        
+        # Wait for upload success
+        await page.wait_for_selector("text=Document indexed!", timeout=30000)
+        
+        # Ask questions
+        questions = [
+            "What are Vishwajit's key educational qualifications?",
+            "Where is Vishwajit currently located right now in real-time?",
+            "What programming languages and frameworks does Vishwajit know?",
+            "Did Vishwajit work on any projects that utilized Docker?"
+        ]
+        
+        for q in questions:
+            await page.fill("#q", q)
+            await page.click("#send")
+            # Wait a few seconds for Gemini to respond and typing animation to finish
+            await page.wait_for_timeout(4000)
+            
+        # Take final screenshot showing all chat
         await page.screenshot(path="screenshot_chatting.png")
         
         await browser.close()

@@ -1,4 +1,4 @@
-# Enreap RAG Assistant
+# Aura RAG Assistant
 
 A fast, lightweight Retrieval-Augmented Generation (RAG) chatbot built with **FastAPI**, **LangChain**, **ChromaDB**, and the **Google Gemini API**.
 

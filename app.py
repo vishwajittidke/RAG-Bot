@@ -26,7 +26,7 @@ load_dotenv(dotenv_path=Path(__file__).parent / ".env")
 # FastAPI
 # ------------------------
 
-app = FastAPI(title="Enreap AI")
+app = FastAPI(title="Aura RAG")
 
 app.add_middleware(
     CORSMiddleware,
