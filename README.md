@@ -28,6 +28,11 @@ python app.py
 ```
 *The application will be available at `http://127.0.0.1:8000`*
 
+## Demo Video
+
+https://github.com/user-attachments/assets/demo_video.webm
+[Click here to watch the full demo](demo_video.webm)
+
 ## Screenshots
 
 ### Main Interface
