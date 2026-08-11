@@ -30,7 +30,7 @@ python app.py
 
 ## Demo Video
 
-<video src="https://github.com/vishwajittidke/RAG-Bot/raw/master/demo_video.webm" width="100%" controls></video>
+https://github.com/vishwajittidke/RAG-Bot/raw/master/demo_video.webm
 
 ## Screenshots
 
