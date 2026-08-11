@@ -30,7 +30,7 @@ python app.py
 
 ## Demo Video
 
-https://github.com/vishwajittidke/RAG-Bot/raw/master/demo_video.mp4
+<video src="demo_video.mp4" controls="controls" width="100%"></video>
 
 ## Screenshots
 
