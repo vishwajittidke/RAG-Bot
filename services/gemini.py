@@ -2,22 +2,26 @@ import os
 import requests
 
 def generate_rag_response(question: str, context: str):
-    prompt = f"""You are Aura RAG.
+    system_prompt = """You are Aura RAG.
 Answer ONLY using the provided context.
-If the answer isn't available, say you don't know strictly if the question is not related to the context provided or if the information is not present in the context provided - Do not answer or guess anything - Answer must be factual and based on context provided - No additional information.
+If the answer isn't available, say "I don't know." strictly. Do not guess anything.
+CRITICAL: Do NOT output your internal reasoning or thoughts. Do NOT use phrases like 'I should provide' or 'Based on the context'. Output ONLY the final, direct answer."""
 
-Context:
+    user_prompt = f"""Context:
 {context}
 
-Question: {question}
-"""
+Question: {question}"""
+
     headers = {
         "Authorization": "Bearer dahl_3Y6DwoV1mLW5MQacV1Q8JDiB2vtpNg4x2",
         "Content-Type": "application/json"
     }
     payload = {
         "model": "MiniMaxAI/MiniMax-M2.7",
-        "messages": [{"role": "user", "content": prompt}]
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt}
+        ]
     }
     
     try:
