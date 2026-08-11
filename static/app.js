@@ -12,7 +12,8 @@ function renderHistory() {
     history.forEach(m => {
         let d=document.createElement("div");
         d.className="msg "+m.sender;
-        d.textContent=m.text;
+        if(m.sender === "bot") d.innerHTML = typeof marked !== "undefined" ? marked.parse(m.text) : m.text;
+        else d.textContent = m.text;
         chat.appendChild(d);
     });
     chat.scrollTop = chat.scrollHeight;
@@ -21,7 +22,8 @@ function renderHistory() {
 function add(t,c,save=true){
     let d=document.createElement("div");
     d.className="msg "+c;
-    d.textContent=t;
+    if(c === "bot") d.innerHTML = typeof marked !== "undefined" ? marked.parse(t) : t;
+    else d.textContent = t;
     chat.appendChild(d);
     chat.scrollTop=chat.scrollHeight;
     if(save){
