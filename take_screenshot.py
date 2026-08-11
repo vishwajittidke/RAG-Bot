@@ -8,9 +8,6 @@ async def main():
         await page.goto("http://127.0.0.1:8000")
         await page.wait_for_timeout(2000)
         
-        # Take initial UI screenshot
-        await page.screenshot(path="screenshot_ui.png")
-        
         # Upload the PDF
         pdf_path = r"C:\Users\Vishwajit\OneDrive\Documents\Vishwajit Tidke Resume.pdf"
         await page.set_input_files("#fileInput", pdf_path)
@@ -18,6 +15,9 @@ async def main():
         
         # Wait for upload success
         await page.wait_for_selector("text=Document indexed!", timeout=30000)
+        
+        # Take UI screenshot after upload so it shows the file attached
+        await page.screenshot(path="screenshot_ui.png")
         
         # Ask questions
         questions = [
