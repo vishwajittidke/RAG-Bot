@@ -6,13 +6,16 @@ def generate_rag_response(question: str, context: str):
 Answer ONLY using the provided context.
 If the answer isn't available, say "I don't know."
 You MUST answer in 1 or 2 short sentences max.
-NEVER explain your reasoning. NEVER use phrases like 'The user is asking' or 'Based on the context'.
-Your first word MUST be the direct answer."""
+You MUST output your final answer prefixed with exactly 'ANSWER:'."""
 
     user_prompt = f"""Context:
 {context}
 
-Question: {question}"""
+Question: {question}
+
+Format your response exactly like this, with any reasoning placed BEFORE the answer:
+[Your reasoning here if needed]
+ANSWER: [Your short, direct 1-sentence answer here]"""
 
     headers = {
         "Authorization": "Bearer dahl_3Y6DwoV1mLW5MQacV1Q8JDiB2vtpNg4x2",
@@ -29,6 +32,9 @@ Question: {question}"""
     try:
         response = requests.post("https://inference.dahl.global/v1/chat/completions", headers=headers, json=payload)
         response.raise_for_status()
-        return response.json()["choices"][0]["message"]["content"].strip()
+        text = response.json()["choices"][0]["message"]["content"].strip()
+        if "ANSWER:" in text:
+            text = text.split("ANSWER:")[-1].strip()
+        return text
     except Exception as e:
         raise Exception("Internal error occurred. Please try again later.") from e
