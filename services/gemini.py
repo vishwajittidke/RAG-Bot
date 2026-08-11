@@ -1,8 +1,9 @@
 import os
 import requests
+import re
 
 def generate_rag_response(question: str, context: str):
-    system_prompt = "You are a concise AI. Answer strictly using the context. If unknown, say 'I don't know.' DO NOT explain your reasoning. DO NOT think out loud. Output ONLY the final answer."
+    system_prompt = "You are a concise AI. Answer strictly using the context. If unknown, say 'I don't know.' DO NOT explain your reasoning. Output ONLY the final answer in 1 or 2 sentences max."
 
     user_prompt = f"Context:\n{context}\n\nQuestion: {question}"
 
@@ -14,8 +15,6 @@ def generate_rag_response(question: str, context: str):
         "model": "MiniMaxAI/MiniMax-M2.7",
         "messages": [
             {"role": "system", "content": system_prompt},
-            {"role": "user", "content": "Context:\nVishwajit is in Bengaluru.\n\nQuestion: Where is Vishwajit?"},
-            {"role": "assistant", "content": "Vishwajit is in Bengaluru."},
             {"role": "user", "content": user_prompt}
         ]
     }
@@ -23,6 +22,11 @@ def generate_rag_response(question: str, context: str):
     try:
         response = requests.post("https://inference.dahl.global/v1/chat/completions", headers=headers, json=payload)
         response.raise_for_status()
-        return response.json()["choices"][0]["message"]["content"].strip()
+        text = response.json()["choices"][0]["message"]["content"].strip()
+        
+        # Physically remove any <think> reasoning blocks
+        text = re.sub(r'<think>.*?</think>', '', text, flags=re.DOTALL).strip()
+        
+        return text
     except Exception as e:
         raise Exception("Internal error occurred. Please try again later.") from e
