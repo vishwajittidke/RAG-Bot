@@ -25,4 +25,4 @@ Question: {question}
         response.raise_for_status()
         return response.json()["choices"][0]["message"]["content"].strip()
     except Exception as e:
-        return f"Error contacting fallback model: {str(e)}"
+        raise Exception("Internal error occurred. Please try again later.") from e

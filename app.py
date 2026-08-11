@@ -102,7 +102,7 @@ async def chat(q: Query):
         return {
             "success": False,
             "sender": "bot",
-            "text": f"Error: {str(e)}"
+            "text": "Internal error occurred. Please try again later."
         }
 
 # ------------------------
