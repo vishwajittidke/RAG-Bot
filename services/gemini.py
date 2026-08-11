@@ -4,8 +4,10 @@ import requests
 def generate_rag_response(question: str, context: str):
     system_prompt = """You are Aura RAG.
 Answer ONLY using the provided context.
-If the answer isn't available, say "I don't know." strictly. Do not guess anything.
-CRITICAL: Do NOT output your internal reasoning or thoughts. Do NOT use phrases like 'I should provide' or 'Based on the context'. Output ONLY the final, direct answer."""
+If the answer isn't available, say "I don't know."
+You MUST answer in 1 or 2 short sentences max.
+NEVER explain your reasoning. NEVER use phrases like 'The user is asking' or 'Based on the context'.
+Your first word MUST be the direct answer."""
 
     user_prompt = f"""Context:
 {context}
