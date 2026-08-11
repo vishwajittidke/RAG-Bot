@@ -12,5 +12,12 @@ def get_vector_store():
 
 def add_to_vector_store(chunks):
     vector_store = get_vector_store()
+    try:
+        vector_store.delete_collection()
+    except Exception:
+        pass
+    
+    # Re-initialize after deletion
+    vector_store = get_vector_store()
     vector_store.add_documents(chunks)
     return vector_store
